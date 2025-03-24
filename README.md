@@ -1,3 +1,3 @@
 # Svm Greeting Dapp
 
-![Home page](https://github.com/shivamSspirit/svm-greet-dapp/blob/main/assets/sonic.jpeg)
+![Home page](https://github.com/shivamSspirit/sonic-greet-dapp/blob/main/assets/sonic.jpeg)
