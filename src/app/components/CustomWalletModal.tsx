@@ -13,7 +13,7 @@ interface WalletModalProps {
 }
 
 export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
-  const { select, wallets, publicKey, disconnect } = useWallet();
+  const { select, wallets } = useWallet();
   const modalRef = useRef<HTMLDivElement>(null);
 
   const supportedWalletNames = ["Backpack", "Nightly"];

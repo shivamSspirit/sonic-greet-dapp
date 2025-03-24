@@ -9,7 +9,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "SVM Greet",
-  description: "A Solana-based greeting dApp",
+  description: "A Sonic-based greeting dApp",
 };
 
 export default function RootLayout({
