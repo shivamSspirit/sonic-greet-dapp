@@ -1,12 +1,14 @@
+
 import { Program, AnchorProvider } from "@coral-xyz/anchor";
 import * as IDL from "./idl.json";
-import { PublicKey, Cluster } from "@solana/web3.js";
+import { PublicKey, Cluster, Connection } from "@solana/web3.js";
 import { GreetSvm } from "./programtypes";
 import {
   AnchorWallet,
-  useConnection,
   useWallet,
 } from "@solana/wallet-adapter-react";
+import { useNetwork } from "./context/NetworkContext";
+
 
 export { IDL };
 export type { GreetSvm };
@@ -30,9 +32,10 @@ export function getGreetSvmProgramId(cluster: Cluster): PublicKey {
 }
 
 export function useAnchorProvider(): AnchorProvider {
-  const { connection } = useConnection();
+  const { network } = useNetwork();
+  const testConnection = new Connection(network.endpoint)
   const wallet = useWallet();
-  return new AnchorProvider(connection, wallet as AnchorWallet, {
+  return new AnchorProvider(testConnection, wallet as AnchorWallet, {
     commitment: "confirmed",
   });
 }

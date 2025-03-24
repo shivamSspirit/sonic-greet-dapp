@@ -17,7 +17,7 @@ export default function FetchWalletInfo() {
       return;
     }
 
-    const connection = new Connection(network.endpoint, "confirmed");
+    const connection = new Connection(network.endpoint, "processed");
     const fetchBalance = async () => {
       try {
         const balance = await connection.getBalance(publicKey);
