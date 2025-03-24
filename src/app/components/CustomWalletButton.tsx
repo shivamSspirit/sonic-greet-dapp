@@ -1,13 +1,25 @@
 "use client";
 
-import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletReadyState } from "@solana/wallet-adapter-base";
+import {
+  WalletProvider as SolanaWalletProvider,
+  useWallet,
+} from "@solana/wallet-adapter-react";
 import { useState } from "react";
 import WalletModal from "./CustomWalletModal";
+
 
 export function WalletButton() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { publicKey, disconnect, wallet } = useWallet();
+  const { wallet, wallets, publicKey, disconnect } = useWallet();
+
+  const supportedWalletNames = ["Backpack", "Nightly"];
+  const filteredWallets = wallets.filter(
+    (wallet) =>
+      supportedWalletNames.includes(wallet.adapter.name) &&
+      wallet.readyState === WalletReadyState.Installed
+  );
 
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
@@ -53,15 +65,35 @@ export function WalletButton() {
     );
   }
 
+  if (filteredWallets.length > 0) {
+    return (
+      <>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="px-6 py-2 bg-gray-700 rounded-full hover:bg-gray-600"
+        >
+          Connect Wallet
+        </button>
+        <WalletModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      </>
+    );
+  }
+
+
   return (
     <>
-      <button
-        onClick={() => setIsModalOpen(true)}
+      <a
+        href="https://www.backpack.app/"
+        target="_blank"
+        rel="noopener noreferrer"
         className="px-6 py-2 bg-gray-700 rounded-full hover:bg-gray-600"
       >
-        Connect Wallet
-      </button>
-      <WalletModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+        Install Backpack
+      </a>
     </>
-  );
+  )
+
+
+
+
 }

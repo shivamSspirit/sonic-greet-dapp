@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/greet_svm.json`.
  */
 export type GreetSvm = {
-  "address": "HAnmxVnFWCuQJ5jfYTmKSeiz1hwj25R2cDWps8rs6sGp",
+  "address": "97uCKFPMDU4S4DQmNwu7BQAYCCFM5fMBms7zk71uJeib",
   "metadata": {
     "name": "greetSvm",
     "version": "0.1.0",

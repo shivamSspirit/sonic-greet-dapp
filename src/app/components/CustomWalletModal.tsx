@@ -1,7 +1,11 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletReadyState } from "@solana/wallet-adapter-base";
+import {
+  WalletProvider as SolanaWalletProvider,
+  useWallet,
+} from "@solana/wallet-adapter-react";
 
 interface WalletModalProps {
   isOpen: boolean;
@@ -9,8 +13,15 @@ interface WalletModalProps {
 }
 
 export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
-  const { select, wallets } = useWallet();
+  const { select, wallets, publicKey, disconnect } = useWallet();
   const modalRef = useRef<HTMLDivElement>(null);
+
+  const supportedWalletNames = ["Backpack", "Nightly"];
+  const filteredWallets = wallets.filter(
+    (wallet) =>
+      supportedWalletNames.includes(wallet.adapter.name) &&
+      wallet.readyState === WalletReadyState.Installed
+  );
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -48,7 +59,7 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
         </button>
         <h2 className="text-xl font-semibold mb-4">Select Wallet</h2>
         <div className="space-y-3">
-          {wallets.map((wallet) => (
+          {filteredWallets.map((wallet) => (
             <button
               key={wallet.adapter.name}
               onClick={() => {

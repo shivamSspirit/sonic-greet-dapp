@@ -10,19 +10,14 @@ export type Network = {
 
 export const NETWORKS = {
   MAINNET: {
-    name: "mainnet-beta",
-    endpoint: "https://api.mainnet-beta.solana.com",
-    label: "Solana Mainnet",
-  },
-  DEVNET: {
-    name: "devnet",
-    endpoint: "https://api.devnet.solana.com",
-    label: "Solana Devnet",
+    name: "mainnet",
+    endpoint: "https://rpc.mainnet-alpha.sonic.game",
+    label: "Sonic Mainnet",
   },
   TESTNET: {
     name: "testnet",
-    endpoint: "https://api.testnet.solana.com",
-    label: "Solana Testnet",
+    endpoint: "https://api.testnet.sonic.game",
+    label: "Sonic Testnet",
   },
 } as const;
 
@@ -34,7 +29,7 @@ type NetworkContextType = {
 const NetworkContext = createContext<NetworkContextType | undefined>(undefined);
 
 export function NetworkProvider({ children }: { children: ReactNode }) {
-  const [network, setNetwork] = useState<Network>(NETWORKS.DEVNET);
+  const [network, setNetwork] = useState<Network>(NETWORKS.TESTNET);
 
   return (
     <NetworkContext.Provider value={{ network, setNetwork }}>

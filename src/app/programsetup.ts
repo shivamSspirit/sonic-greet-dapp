@@ -12,7 +12,7 @@ export { IDL };
 export type { GreetSvm };
 
 export const greetSvmProgramId = new PublicKey(
-  "HAnmxVnFWCuQJ5jfYTmKSeiz1hwj25R2cDWps8rs6sGp"
+  "97uCKFPMDU4S4DQmNwu7BQAYCCFM5fMBms7zk71uJeib"
 );
 
 export function getGreetSVMProgram(provider: AnchorProvider): Program<GreetSvm> {
@@ -21,10 +21,9 @@ export function getGreetSVMProgram(provider: AnchorProvider): Program<GreetSvm> 
 
 export function getGreetSvmProgramId(cluster: Cluster): PublicKey {
   switch (cluster) {
-    case "devnet":
     case "testnet":
-    case "mainnet-beta":
       return greetSvmProgramId;
+    case "devnet":
     default:
       return greetSvmProgramId;
   }

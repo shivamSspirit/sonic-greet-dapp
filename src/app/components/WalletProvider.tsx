@@ -3,6 +3,10 @@
 import { useMemo } from "react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
+
+import { NightlyWalletAdapter } from "@solana/wallet-adapter-wallets";
+import { WalletReadyState } from "@solana/wallet-adapter-base";
+
 import { clusterApiUrl } from "@solana/web3.js";
 import {
   ConnectionProvider,
@@ -25,16 +29,15 @@ export default function AppWalletProvider({
 function AppWalletProviderInner({ children }: { children: React.ReactNode }) {
   const { network } = useNetwork();
 
+
   const walletAdapterNetwork = useMemo(() => {
     switch (network.name) {
-      case "mainnet-beta":
+      case "mainnet":
         return WalletAdapterNetwork.Mainnet;
-      case "devnet":
-        return WalletAdapterNetwork.Devnet;
       case "testnet":
         return WalletAdapterNetwork.Testnet;
       default:
-        return WalletAdapterNetwork.Devnet;
+        return WalletAdapterNetwork.Testnet;
     }
   }, [network.name]);
 
@@ -42,12 +45,21 @@ function AppWalletProviderInner({ children }: { children: React.ReactNode }) {
     () => clusterApiUrl(walletAdapterNetwork),
     [walletAdapterNetwork]
   );
+  
+  const wallets = useMemo(() => [new NightlyWalletAdapter()], [walletAdapterNetwork]);
 
-  const wallets = useMemo(() => [], [walletAdapterNetwork]);
+  const supportedWalletNames = ["Backpack", "Nightly"];
+
+  const filteredWallets = wallets.filter(
+    (wallet:any) =>
+      supportedWalletNames.includes(wallet.adapter?.name) &&
+      wallet.readyState === WalletReadyState.Installed
+  );
+
 
   return (
     <ConnectionProvider endpoint={endpoint}>
-      <SolanaWalletProvider wallets={wallets} autoConnect>
+      <SolanaWalletProvider wallets={filteredWallets} autoConnect>
         <WalletModalProvider>{children}</WalletModalProvider>
       </SolanaWalletProvider>
     </ConnectionProvider>
