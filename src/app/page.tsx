@@ -1,6 +1,6 @@
 import FetchWalletInfo from "./components/GetWalletInfo";
 import CreateGreet from "./components/CreateGreet";
-import CounterCard from "./components/GreetingCard";
+import GreetingCard from "./components/GreetingCard";
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
           <CreateGreet />
         </div>
         <div className="border border-gray-700 rounded-lg hover:border-teal-500 transition-colors min-h-[300px] flex flex-col">
-          <CounterCard />
+          <GreetingCard />
         </div>
       </div>
     </main>

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useGreetSVMProgram } from "./ProgramInteraction";
 import { useRefresh } from "../context/RefreshContext";
 
-export default function CounterCard() {
+export default function GreetingCard() {
   const { greetPDAAccount, fetchGreetAccount, publicKey } = useGreetSVMProgram();
   const { refreshTrigger } = useRefresh();
   const [greetData, setGreetData] = useState<any>(null);
